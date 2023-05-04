@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PackageId>Memento</PackageId>
+        <Authors>Sluk4d</Authors>
+        <Company>Matozap</Company>
+        <Product>Memento</Product>
+        <Description>cache which supports Redis, SQL Server, InMemory, with automatic failure recovery, heath checks, automatic table generation (MSSQL), logging and more </Description>
+        <Copyright>Matozap</Copyright>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <PackageTags>Matozap, Memento, Cache, Distributed Cache, IDistributedCache, Redis, InMemory, Sql Server</PackageTags>
+        <PackageReleaseNotes>Release Candidate</PackageReleaseNotes>
+        <RepositoryType>Github</RepositoryType>
+        <RepositoryUrl>https://github.com/Matozap/Memento</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/Matozap/Memento</PackageProjectUrl>
+        <PackageIcon>logo.png</PackageIcon>
+        <PackageReadmeFile>NUGET.md</PackageReadmeFile>
+        <Version>0.0.1-rc1</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+      <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="7.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Caching.SqlServer" Version="7.0.5" />
+      <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="logo.png" Pack="true" PackagePath="\" />
+        <None Include="NUGET.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+</Project>
