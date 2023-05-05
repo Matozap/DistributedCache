@@ -41,7 +41,12 @@ public class CountryManager
 
         var dataValue = await GetAllCountriesFromRepositoryAsync();
 
-        _ = _cache.SetCacheValueAsync(cacheKey, dataValue, cancellationToken);
+        var ttl = new DistributedCacheEntryOptions
+        {
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60),
+            SlidingExpiration = TimeSpan.FromSeconds(30)
+        };
+        _ = _cache.SetCacheValueAsync(cacheKey, dataValue, ttl, cancellationToken);
 
         return dataValue;
     }
