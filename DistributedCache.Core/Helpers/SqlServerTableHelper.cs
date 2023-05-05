@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace Memento.Core.Helpers;
+namespace DistributedCache.Core.Helpers;
 
 public static class SqlServerTableHelper
 {

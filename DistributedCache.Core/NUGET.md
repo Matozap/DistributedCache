@@ -1,16 +1,11 @@
 # DistributedCache
 
-![Build](https://img.shields.io/github/actions/workflow/status/Matozap/DistributedCache/build.yml?style=for-the-badge&logo=github&color=0D7EBF)
-![Commits](https://img.shields.io/github/last-commit/Matozap/DistributedCache?style=for-the-badge&logo=github&color=0D7EBF)
-![Package](https://img.shields.io/nuget/dt/DistributedCache?style=for-the-badge&logo=nuget&color=0D7EBF)
-
-
-DistributedCache is an open source caching abstraction layer for .NET which supports Redis, SQL Server, InMemory, with automatic 
+DistributedCache is an open source caching abstraction layer for .NET which supports Redis, SQL Server, InMemory, with automatic
 failure recovery, heath checks, automatic table generation (MSSQL), logging and also allows to clear all keys.
 
 
 It simplifies cache usage by allowing developers to inject it into the application and use it anywhere
-without having to worry about configuration for an specific infrastructure (InMemory, Redis, SQL server). 
+without having to worry about configuration for an specific infrastructure (InMemory, Redis, SQL server).
 
 It is as fast as a cache interface can be and also includes the feature of **CLEAR ALL** keys which is missing from IDistributedCache.
 
@@ -57,9 +52,9 @@ public class CountryManager
 
 ### Configuration
 
-#### Scenario 1: InMemory Cache 
+#### Scenario 1: InMemory Cache
 
-This is the most basic, yet common, scenario in which the application uses a cache in memory to increase the performance of a single 
+This is the most basic, yet common, scenario in which the application uses a cache in memory to increase the performance of a single
 instance of an application.
 
 ```csharp

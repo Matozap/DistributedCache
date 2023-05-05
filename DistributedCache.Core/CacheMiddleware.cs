@@ -1,19 +1,26 @@
-﻿using Memento.Core.Configuration;
-using Memento.Core.Helpers;
+﻿using DistributedCache.Core.Configuration;
+using DistributedCache.Core.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Memento.Core;
+namespace DistributedCache.Core;
 
 public static class CacheMiddleware
 {
-    public static IServiceCollection AddMemento(this IServiceCollection services, Action<CacheOptions> options)
+    /// <summary>
+    /// Adds ICache to the service collection and sets up connectivity depending in the selected cache type (InMemory, Redis or SQL server)
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="options">Sets the options for the cache like the cached type, connection string and instance name</param>
+    /// <returns>Service Collection</returns>
+    /// <exception cref="ArgumentNullException">Connection string is required if the cache type is not InMemory</exception>
+    public static IServiceCollection AddDistributedCache(this IServiceCollection services, Action<CacheOptions> options)
     {
         var cacheOptions = new CacheOptions();
         options.Invoke(cacheOptions);
 
         if (cacheOptions.CacheType != CacheType.InMemory && string.IsNullOrEmpty(cacheOptions.ConnectionString))
         {
-            throw new ArgumentNullException(nameof(AddMemento),"ConnectionString is required but was missing in cache registration");
+            throw new ArgumentNullException(nameof(AddDistributedCache),"ConnectionString is required but was missing in cache registration");
         }
         
         switch (cacheOptions.CacheType)
@@ -46,7 +53,6 @@ public static class CacheMiddleware
             }
         }
         
-        services.AddSingleton(cacheOptions);
         services.AddSingleton<ICache, Cache>();
         return services;
     }

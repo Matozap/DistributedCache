@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Memento.Core.Helpers;
+namespace DistributedCache.Core.Helpers;
 
 public static class JsonExtension
 {

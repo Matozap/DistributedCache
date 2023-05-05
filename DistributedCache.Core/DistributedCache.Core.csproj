@@ -4,21 +4,21 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <PackageId>Memento</PackageId>
+        <PackageId>DistributedCache</PackageId>
         <Authors>Sluk4d</Authors>
         <Company>Matozap</Company>
-        <Product>Memento</Product>
-        <Description>cache which supports Redis, SQL Server, InMemory, with automatic failure recovery, heath checks, automatic table generation (MSSQL), logging and more </Description>
+        <Product>DistributedCache</Product>
+        <Description>DistributedCache is an open source caching abstraction layer for .NET which supports Redis, SQL Server, InMemory, with automatic failure recovery, heath checks, automatic table generation (MSSQL), logging and also allows to clear all keys </Description>
         <Copyright>Matozap</Copyright>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-        <PackageTags>Matozap, Memento, Cache, Distributed Cache, IDistributedCache, Redis, InMemory, Sql Server</PackageTags>
-        <PackageReleaseNotes>Release Candidate</PackageReleaseNotes>
+        <PackageTags>DistributedCache, Cache, Distributed Cache, IDistributedCache, Redis, InMemory, Sql Server, Matozap</PackageTags>
+        <PackageReleaseNotes>Release</PackageReleaseNotes>
         <RepositoryType>Github</RepositoryType>
-        <RepositoryUrl>https://github.com/Matozap/Memento</RepositoryUrl>
-        <PackageProjectUrl>https://github.com/Matozap/Memento</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Matozap/DistributedCache</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/Matozap/DistributedCache</PackageProjectUrl>
         <PackageIcon>logo.png</PackageIcon>
         <PackageReadmeFile>NUGET.md</PackageReadmeFile>
-        <Version>0.0.1-rc1</Version>
+        <Version>1.3.1</Version>
     </PropertyGroup>
 
     <ItemGroup>

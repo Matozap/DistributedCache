@@ -1,9 +1,9 @@
-﻿using Memento.Core.Configuration;
-using Memento.Core.Helpers;
+﻿using DistributedCache.Core.Configuration;
+using DistributedCache.Core.Helpers;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
-namespace Memento.Core;
+namespace DistributedCache.Core;
 
 public class Cache : ICache
 {
@@ -15,7 +15,11 @@ public class Cache : ICache
     private readonly IDistributedCache _distributedCache;
     private readonly CacheOptions _cacheOptions;
     private readonly ILogger<Cache> _logger;
-    private readonly DistributedCacheEntryOptions _distributedCacheEntryOptions;
+    private readonly DistributedCacheEntryOptions _distributedCacheEntryOptions = new()
+    {
+        AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60),
+        SlidingExpiration = TimeSpan.FromSeconds(30)
+    };
     
     private const string AllKeys = "ICacheAllKeys";
 
@@ -24,11 +28,6 @@ public class Cache : ICache
         _distributedCache = cache;
         _cacheOptions = cacheOptions;
         _logger = logger;
-        _distributedCacheEntryOptions = new DistributedCacheEntryOptions
-        {
-            AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60),
-            SlidingExpiration = TimeSpan.FromSeconds(30)
-        };
         _errorMessages = new List<string>();
     }
 
@@ -36,6 +35,7 @@ public class Cache : ICache
     {
         try
         {
+            
             CheckHealthStatus();
             
             if (_cacheOptions.Disabled)
@@ -60,11 +60,12 @@ public class Cache : ICache
         }
     }
                 
-    public async Task SetCacheValueAsync<T>(string key, T value, CancellationToken token = default) where T : class
+    public async Task SetCacheValueAsync<T>(string key, T value, DistributedCacheEntryOptions? distributedCacheEntryOptions = null,CancellationToken token = default) where T : class
     {
         try
         {
             CheckHealthStatus();
+            distributedCacheEntryOptions ??= _distributedCacheEntryOptions;
             
             if (_cacheOptions.Disabled)
                 return;
@@ -72,7 +73,7 @@ public class Cache : ICache
             var cacheKey = GenerateKey(key);
 
             var result = value.Serialize();
-            await _distributedCache.SetStringAsync(cacheKey, result, _distributedCacheEntryOptions, token);
+            await _distributedCache.SetStringAsync(cacheKey, result, distributedCacheEntryOptions, token);
             _ = AddToKeyListAsync(cacheKey, token);
             SetHealthyStatus();
         }

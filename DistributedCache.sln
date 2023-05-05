@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Core", "Memento.Core\Memento.Core.csproj", "{2E712B2A-2095-450D-9799-C133A5201D6F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistributedCache.Core", "DistributedCache.Core\DistributedCache.Core.csproj", "{2E712B2A-2095-450D-9799-C133A5201D6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
