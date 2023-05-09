@@ -1,5 +1,6 @@
 # DistributedCache
 
+
 DistributedCache is an open source caching abstraction layer for .NET which supports Redis, SQL Server, InMemory, with automatic
 failure recovery, heath checks, automatic table generation (MSSQL), logging and also allows to clear all keys.
 
@@ -40,17 +41,29 @@ public class CountryManager
         }
 
         var dataValue = await GetAllCountriesFromRepositoryAsync();
-
-        var ttl = new DistributedCacheEntryOptions
-        {
-            AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60),
-            SlidingExpiration = TimeSpan.FromSeconds(30)
-        };
-        _ = _cache.SetCacheValueAsync(cacheKey, dataValue, ttl, cancellationToken);
+        _ = _cache.SetCacheValueAsync(cacheKey, dataValue);
 
         return dataValue;
     }
 }
+
+```
+
+#### Setting cache TTL
+
+There are 2 ways to achieve that:
+
+1. Using a default TTL (see configuration section)
+2. Overriding the default TTL on a case-by-case basis like this:
+
+```csharp
+
+var ttl = new DistributedCacheEntryOptions
+{
+    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60),
+    SlidingExpiration = TimeSpan.FromSeconds(30)
+};
+_ = _cache.SetCacheValueAsync(cacheKey, dataValue, ttl, cancellationToken);
 
 ```
 
@@ -97,7 +110,9 @@ var connectionString = "some cache connection string";
 services.AddDistributedCache(options =>
 {
     options.Configure(CacheType.SqlServer, connectionString, "myApplicationCacheInstance")
-        .ConfigureHealthCheck(enabled:true, maxErrorsAllowed:5, resetIntervalMinutes:2);
+        .ConfigureHealthCheck(enabled:true, maxErrorsAllowed:5, resetIntervalMinutes:2)
+        .AddDefaultTtl(TimeSpan.FromSeconds(60), TimeSpan.FromSeconds(30))
+        .DisableCache(false);
 });
 ```
 

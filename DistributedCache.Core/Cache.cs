@@ -35,7 +35,6 @@ public class Cache : ICache
     {
         try
         {
-            
             CheckHealthStatus();
             
             if (_cacheOptions.Disabled)
@@ -50,6 +49,34 @@ public class Cache : ICache
             var deserializedObj = result.Deserialize<T>();
             SetHealthyStatus();
             return deserializedObj;
+        }
+        catch (Exception ex)
+        {
+            _errorMessages.Add(ex.Message);
+            _logger.LogDebug("Could not get cache key {CacheKey} - {Error}",key, ex.Message);
+            SetUnhealthyStatus();
+            return null;
+        }
+    }
+    
+    public async Task<string?> GetCacheValueAsync(string key, CancellationToken token = default)
+    {
+        try
+        {
+            CheckHealthStatus();
+            
+            if (_cacheOptions.Disabled)
+                return null;
+            
+            var cacheKey = GenerateKey(key);
+            var result = await _distributedCache.GetStringAsync(cacheKey, token);
+            if (string.IsNullOrEmpty(result))
+            {
+                return null;
+            }
+            
+            SetHealthyStatus();
+            return result;
         }
         catch (Exception ex)
         {
@@ -84,6 +111,36 @@ public class Cache : ICache
             SetUnhealthyStatus();
         }
     }
+    
+    public async Task SetCacheValueAsync<T>(string key, T value, CancellationToken token = default) where T : class 
+        => await SetCacheValueAsync(key, value, _distributedCacheEntryOptions, token);
+    
+    public async Task SetCacheValueAsync(string key, string value, DistributedCacheEntryOptions? distributedCacheEntryOptions = null,CancellationToken token = default)
+    {
+        try
+        {
+            CheckHealthStatus();
+            distributedCacheEntryOptions ??= _distributedCacheEntryOptions;
+            
+            if (_cacheOptions.Disabled)
+                return;
+
+            var cacheKey = GenerateKey(key);
+
+            await _distributedCache.SetStringAsync(cacheKey, value, distributedCacheEntryOptions, token);
+            _ = AddToKeyListAsync(cacheKey, token);
+            SetHealthyStatus();
+        }
+        catch (Exception ex)
+        {
+            _errorMessages.Add(ex.Message);
+            _logger.LogDebug("Could not set cache key {CacheKey} - {Error}",key, ex.Message);
+            SetUnhealthyStatus();
+        }
+    }
+    
+    public async Task SetCacheValueAsync(string key, string value, CancellationToken token = default)
+        => await SetCacheValueAsync(key, value, _distributedCacheEntryOptions, token);
 
     public async Task RemoveValueAsync(string key, CancellationToken token = default)
     {

@@ -1,4 +1,6 @@
-﻿namespace DistributedCache.Core.Configuration;
+﻿using Microsoft.Extensions.Caching.Distributed;
+
+namespace DistributedCache.Core.Configuration;
 
 public class CacheOptions
 {
@@ -20,16 +22,20 @@ public class CacheOptions
     /// Contains the health check setup (Read-Only) - Use ConfigureHealthCheck method to set it.
     /// </summary>
     public HealthCheckOptions? HealthCheck { get; private set; } = new(true, DefaultMaxErrorsAllowed, DefaultResetIntervalMinutes);
-    public bool Disabled { get; set; }
     /// <summary>
     /// Indicates if the cache is disabled - Use DisableCache method to set it.
     /// </summary>
+    public bool Disabled { get; set; }
+    /// <summary>
+    /// Contains the default TTL for the cache which can be overwritten case by case - Use AddDefaultTtl method to set it.
+    /// </summary>
+    public DistributedCacheEntryOptions DefaultTtl { get; private set; } = new()
+    {
+        AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60),
+        SlidingExpiration = TimeSpan.FromSeconds(30)
+    };
     private const int DefaultMaxErrorsAllowed = 5;
     private const int DefaultResetIntervalMinutes = 5;
-
-    public CacheOptions()
-    {
-    }
     
     /// <summary>
     /// Sets the basic configuration of the ICache interface
@@ -78,6 +84,23 @@ public class CacheOptions
     public CacheOptions DisableCache(bool disable)
     {
         Disabled = disable;
+        return this;
+    }
+    
+    /// <summary>
+    /// Add the default TTL to be used when no specific TTL is send
+    /// </summary>
+    /// <param name="absoluteExpirationRelativeToNow">Sets an absolute expiration time, relative to now</param>
+    /// <param name="slidingExpiration">Sets how long a cache entry can be inactive (e.g. not accessed) before it will be removed. This will not extend the entry lifetime beyond the absolute expiration</param>
+    /// <returns></returns>
+    public CacheOptions AddDefaultTtl(TimeSpan absoluteExpirationRelativeToNow, TimeSpan slidingExpiration)
+    {
+        DefaultTtl = new DistributedCacheEntryOptions
+        {
+            AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow,
+            SlidingExpiration = slidingExpiration
+        };
+        
         return this;
     }
 }
