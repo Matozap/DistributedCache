@@ -53,6 +53,7 @@ public static class CacheMiddleware
             }
         }
         
+        services.AddSingleton(cacheOptions);
         services.AddSingleton<ICache, Cache>();
         return services;
     }

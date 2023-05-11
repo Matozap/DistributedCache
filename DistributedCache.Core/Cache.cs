@@ -7,7 +7,7 @@ namespace DistributedCache.Core;
 
 public class Cache : ICache
 {
-    private static readonly string Prefix = Environment.GetEnvironmentVariable("SERVICE_NAME") ?? "memento";
+    private static readonly string Prefix = Environment.GetEnvironmentVariable("SERVICE_NAME") ?? "IDistributedCache";
     private int _currentErrorCount;
     private bool _automaticallyDisabled;
     private DateTime _automaticallyDisabledTime;
