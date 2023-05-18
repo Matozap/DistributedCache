@@ -165,37 +165,55 @@ public class Cache : ICache
     
     public async Task ClearCacheWithPrefixAsync(string prefix, CancellationToken token = default)
     {
-        var result = await _distributedCache.GetStringAsync(AllKeys, token);
-        if (result != null)
+        try
         {
-            var keys = result.Deserialize<List<string>>();
-            if (keys?.Count > 0)
+            var result = await _distributedCache.GetStringAsync(AllKeys, token);
+            if (result != null)
             {
-                foreach (var key in keys.Where(k => k.Contains(prefix)))
+                var keys = result.Deserialize<List<string>>();
+                if (keys?.Count > 0)
                 {
-                    await _distributedCache.RemoveAsync(key, token);
-                }
+                    foreach (var key in keys.Where(k => k.Contains(prefix)))
+                    {
+                        await _distributedCache.RemoveAsync(key, token);
+                    }
 
-                _logger.LogInformation("Cache cleared successfully");
+                    _logger.LogInformation("Cache cleared successfully for prefix {Prefix}", prefix);
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            _errorMessages.Add(ex.Message);
+            _logger.LogDebug("Could clear cache with prefix {Prefix} from cache - {Error}", prefix, ex.Message);
+            SetUnhealthyStatus();
         }
     }
 
     public async Task ClearCacheAsync(CancellationToken token = default)
     {
-        var result = await _distributedCache.GetStringAsync(AllKeys, token);
-        if (result != null)
+        try
         {
-            var keys = result.Deserialize<List<string>>();
-            if (keys?.Count > 0)
+            var result = await _distributedCache.GetStringAsync(AllKeys, token);
+            if (result != null)
             {
-                foreach (var key in keys)
+                var keys = result.Deserialize<List<string>>();
+                if (keys?.Count > 0)
                 {
-                    await _distributedCache.RemoveAsync(key, token);
-                }
+                    foreach (var key in keys)
+                    {
+                        await _distributedCache.RemoveAsync(key, token);
+                    }
 
-                _logger.LogInformation("Cache cleared successfully");
+                    _logger.LogInformation("Cache cleared successfully");
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            _errorMessages.Add(ex.Message);
+            _logger.LogDebug("Could clear cache - {Error}", ex.Message);
+            SetUnhealthyStatus();
         }
     }
 
