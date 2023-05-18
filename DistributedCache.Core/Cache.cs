@@ -162,6 +162,24 @@ public class Cache : ICache
             SetUnhealthyStatus();
         }
     }
+    
+    public async Task ClearCacheWithPrefixAsync(string prefix, CancellationToken token = default)
+    {
+        var result = await _distributedCache.GetStringAsync(AllKeys, token);
+        if (result != null)
+        {
+            var keys = result.Deserialize<List<string>>();
+            if (keys?.Count > 0)
+            {
+                foreach (var key in keys.Where(k => k.Contains(prefix)))
+                {
+                    await _distributedCache.RemoveAsync(key, token);
+                }
+
+                _logger.LogInformation("Cache cleared successfully");
+            }
+        }
+    }
 
     public async Task ClearCacheAsync(CancellationToken token = default)
     {

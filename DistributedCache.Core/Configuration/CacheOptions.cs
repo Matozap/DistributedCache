@@ -4,7 +4,7 @@ namespace DistributedCache.Core.Configuration;
 
 public class CacheOptions
 {
-    public record HealthCheckOptions(bool Enabled, int MaxErrorsAllowed, int ResetIntervalMinutes);
+    internal record HealthCheckOptions(bool Enabled, int MaxErrorsAllowed, int ResetIntervalMinutes);
 
     /// <summary>
     /// Contains the cache type (Read-Only) - Use the Configure method to set it
@@ -17,19 +17,19 @@ public class CacheOptions
     /// <summary>
     /// Contains the connection string (Read-Only) - Use the Configure method to set it
     /// </summary>
-    public string? ConnectionString { get; private set; }
+    internal string? ConnectionString { get; private set; }
     /// <summary>
     /// Contains the health check setup (Read-Only) - Use ConfigureHealthCheck method to set it.
     /// </summary>
-    public HealthCheckOptions? HealthCheck { get; private set; } = new(true, DefaultMaxErrorsAllowed, DefaultResetIntervalMinutes);
+    internal HealthCheckOptions? HealthCheck { get; private set; } = new(true, DefaultMaxErrorsAllowed, DefaultResetIntervalMinutes);
     /// <summary>
     /// Indicates if the cache is disabled - Use DisableCache method to set it.
     /// </summary>
-    public bool Disabled { get; set; }
+    internal bool Disabled { get; set; }
     /// <summary>
     /// Contains the default TTL for the cache which can be overwritten case by case - Use AddDefaultTtl method to set it.
     /// </summary>
-    public DistributedCacheEntryOptions DefaultTtl { get; private set; } = new()
+    internal DistributedCacheEntryOptions DefaultTtl { get; private set; } = new()
     {
         AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(60),
         SlidingExpiration = TimeSpan.FromSeconds(30)

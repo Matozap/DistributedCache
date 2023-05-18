@@ -12,7 +12,8 @@ failure recovery, heath checks, automatic table generation (MSSQL), logging and 
 It simplifies cache usage by allowing developers to inject it into the application and use it anywhere
 without having to worry about configuration for an specific infrastructure (InMemory, Redis, SQL server). 
 
-It is as fast as a cache interface can be and also includes the feature of **CLEAR ALL** keys which is missing from IDistributedCache.
+It is as fast as a cache interface can be and also includes the feature of **CLEAR ALL** keys and **CLEAR ALL WITH PREFIX** which were both
+missing from IDistributedCache.
 
 
 ------------------------------

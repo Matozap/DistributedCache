@@ -63,7 +63,14 @@ public interface ICache
     /// <returns>Task</returns>
     public Task RemoveValueAsync(string key, CancellationToken token = default);
     /// <summary>
-    /// Clear all the key/values stored by the application using it
+    /// Removes all values from the cache which starts with the given prefix
+    /// </summary>
+    /// <param name="prefix">The key to search for</param>
+    /// <param name="token">The Cancellation Token</param>
+    /// <returns></returns>
+    Task ClearCacheWithPrefixAsync(string prefix, CancellationToken token = default);
+    /// <summary>
+    /// Clear all the key/values stored by the application having the passed prefix
     /// </summary>
     /// <param name="token">The Cancellation Token</param>
     /// <returns></returns>
