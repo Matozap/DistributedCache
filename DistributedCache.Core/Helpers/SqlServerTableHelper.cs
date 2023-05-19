@@ -16,7 +16,7 @@ public static class SqlServerTableHelper
             [AbsoluteExpiration] [datetimeoffset](7) NULL,
             PRIMARY KEY CLUSTERED ([Id] ASC))";
     
-    public static void CreateSqlCacheIfNotExists(string connectionString, string instanceName)
+    internal static void CreateSqlCacheIfNotExists(string connectionString, string instanceName)
     {
         using var connection = new SqlConnection(connectionString);
         connection.Open();

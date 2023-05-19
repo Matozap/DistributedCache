@@ -19,7 +19,7 @@
         <PackageIcon>logo.png</PackageIcon>
         <PackageReadmeFile>NUGET.md</PackageReadmeFile>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <Version>7.0.2</Version>
+        <Version>7.0.3</Version>
         <NoWarn>$(NoWarn);1591</NoWarn>
     </PropertyGroup>
 

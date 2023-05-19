@@ -9,6 +9,6 @@ public static class JsonExtension
         PropertyNameCaseInsensitive = true
     };
 
-    public static T? Deserialize<T>(this string json) => JsonSerializer.Deserialize<T>(json, JsonSerializerOptions);
-    public static string Serialize<T>(this T obj) => JsonSerializer.Serialize(obj, JsonSerializerOptions);
+    internal static T? Deserialize<T>(this string json) => JsonSerializer.Deserialize<T>(json, JsonSerializerOptions);
+    internal static string Serialize<T>(this T obj) => JsonSerializer.Serialize(obj, JsonSerializerOptions);
 }
