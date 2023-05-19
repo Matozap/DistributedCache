@@ -1,9 +1,9 @@
-﻿using DistributedCache.Core.Configuration;
-using DistributedCache.Core.Helpers;
+﻿using Distributed.Cache.Core.Configuration;
+using Distributed.Cache.Core.Helpers;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
-namespace DistributedCache.Core;
+namespace Distributed.Cache.Core;
 
 public class Cache : ICache
 {

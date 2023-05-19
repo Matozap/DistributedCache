@@ -1,8 +1,8 @@
-﻿using DistributedCache.Core.Configuration;
-using DistributedCache.Core.Helpers;
+﻿using Distributed.Cache.Core.Configuration;
+using Distributed.Cache.Core.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DistributedCache.Core;
+namespace Distributed.Cache.Core;
 
 public static class CacheMiddleware
 {

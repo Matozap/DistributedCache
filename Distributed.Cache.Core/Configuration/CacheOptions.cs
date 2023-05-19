@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 
-namespace DistributedCache.Core.Configuration;
+namespace Distributed.Cache.Core.Configuration;
 
 public class CacheOptions
 {

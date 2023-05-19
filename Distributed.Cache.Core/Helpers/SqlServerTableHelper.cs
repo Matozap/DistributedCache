@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Microsoft.Data.SqlClient;
 
-namespace DistributedCache.Core.Helpers;
+namespace Distributed.Cache.Core.Helpers;
 
 public static class SqlServerTableHelper
 {

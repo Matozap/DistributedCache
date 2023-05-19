@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace DistributedCache.Core.Helpers;
+namespace Distributed.Cache.Core.Helpers;
 
 public static class JsonExtension
 {

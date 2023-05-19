@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 
-namespace DistributedCache.Core;
+namespace Distributed.Cache.Core;
 
 public interface ICache
 {
