@@ -112,8 +112,8 @@ public class Cache : ICache
         }
     }
     
-    public async Task SetCacheValueAsync<T>(string key, T value, CancellationToken token = default) where T : class 
-        => await SetCacheValueAsync(key, value, _distributedCacheEntryOptions, token);
+    public Task SetCacheValueAsync<T>(string key, T value, CancellationToken token = default) where T : class 
+        => SetCacheValueAsync(key, value, _distributedCacheEntryOptions, token);
     
     public async Task SetCacheValueAsync(string key, string value, DistributedCacheEntryOptions? distributedCacheEntryOptions = null,CancellationToken token = default)
     {
@@ -139,8 +139,8 @@ public class Cache : ICache
         }
     }
     
-    public async Task SetCacheValueAsync(string key, string value, CancellationToken token = default)
-        => await SetCacheValueAsync(key, value, _distributedCacheEntryOptions, token);
+    public Task SetCacheValueAsync(string key, string value, CancellationToken token = default)
+        => SetCacheValueAsync(key, value, _distributedCacheEntryOptions, token);
 
     public async Task RemoveValueAsync(string key, CancellationToken token = default)
     {
